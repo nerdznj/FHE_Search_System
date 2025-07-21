@@ -1,0 +1,4 @@
+tenseal>=0.3.0
+numpy>=1.21.0
+scikit-learn>=1.0.0
+pathlib2>=2.3.0

@@ -1,0 +1,21 @@
+{
+  "max_features": 1500,
+  "ngram_range": [1, 3],
+  "database_path": "search_database.db",
+  "enable_clustering": true,
+  "cluster_count": 8,
+  "batch_size": 100,
+  "encryption": {
+    "poly_modulus_degree": 16384,
+    "coeff_modulus": [60, 40, 40, 40, 60],
+    "scale": 1099511627776
+  },
+  "search": {
+    "min_similarity_threshold": 0.02,
+    "default_top_k": 10
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "search_system.log"
+  }
+}
