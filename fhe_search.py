@@ -52,11 +52,11 @@ logger = logging.getLogger(__name__)
 class PersianTextProcessor:
     """
     کلاس پردازش متن برای زبان‌های فارسی، عربی و انگلیسی
-    شامل حذف کلمات ایست، نرمال‌سازی و تشخیص زبان
+    شامل حذف کلمات، نرمال‌سازی و تشخیص زبان
     """
     
     def __init__(self):
-        # کلمات ایست فارسی - از منابع مختلف جمع‌آوری شده
+        # کلمات فارسی - از منابع مختلف جمع‌آوری شده
         self.persian_stopwords = {
             'از', 'به', 'در', 'با', 'که', 'این', 'آن', 'را', 'و', 'یا', 'تا', 'اما', 'بر',
             'کرد', 'شد', 'است', 'بود', 'می‌باشد', 'خود', 'خواهد', 'دارد', 'داشت', 'کند',
@@ -64,7 +64,7 @@ class PersianTextProcessor:
             'برای', 'روی', 'زیر', 'بالا', 'پایین', 'جلو', 'عقب', 'وسط', 'کنار'
         }
         
-        # کلمات ایست عربی
+        # کلمات عربی
         self.arabic_stopwords = {
             'في', 'من', 'إلى', 'عن', 'مع', 'هذا', 'ذلك', 'التي', 'الذي', 'كان', 'يكون', 
             'هو', 'هي', 'أن', 'على', 'إن', 'كل', 'بعض', 'غير', 'سوف', 'قد', 'لم', 'لن'
@@ -132,7 +132,7 @@ class PersianTextProcessor:
         return text.strip().lower()
 
     def remove_stopwords(self, text: str, language: str) -> str:
-        """حذف کلمات ایست بر اساس زبان"""
+        """حذف کلمات بر اساس زبان"""
         words = text.split()
         
         if language == 'persian':
@@ -157,14 +157,14 @@ class PersianTextProcessor:
         # پاک‌سازی اولیه
         cleaned_text = self.clean_text(text)
         
-        # حذف کلمات ایست
+        # حذف کلمات
         final_text = self.remove_stopwords(cleaned_text, language)
         
         return final_text if final_text.strip() else cleaned_text
 
 
 class DatabaseManager:
-    """مدیریت پایگاه داده SQLite"""
+    """مدیریت دیتابیس SQLite"""
     
     def __init__(self, db_path: str = 'fhe_search.db'):
         self.db_path = db_path
@@ -172,7 +172,7 @@ class DatabaseManager:
         self._initialize_db()
     
     def _initialize_db(self):
-        """ایجاد جداول پایگاه داده"""
+        """ایجاد جداول دیتابیس"""
         try:
             self.connection = sqlite3.connect(self.db_path, check_same_thread=False)
             cursor = self.connection.cursor()
@@ -221,15 +221,15 @@ class DatabaseManager:
             ''')
             
             self.connection.commit()
-            logger.info(f"پایگاه داده در {self.db_path} آماده شد")
+            logger.info(f"دیتابیس در {self.db_path} آماده شد")
             
         except Exception as e:
-            logger.error(f"خطا در ایجاد پایگاه داده: {e}")
+            logger.error(f"خطا در ایجاد دیتابیس: {e}")
             self.connection = None
     
     def store_document(self, content: str, processed_content: str, language: str, 
                       metadata: Dict, is_encrypted: bool = False) -> int:
-        """ذخیره یک سند در پایگاه داده"""
+        """ذخیره یک سند در دیتابیس"""
         if not self.connection:
             return -1
             
@@ -286,7 +286,7 @@ class DatabaseManager:
             logger.error(f"خطا در ذخیره تاریخچه جستجو: {e}")
     
     def get_statistics(self) -> Dict:
-        """دریافت آمار از پایگاه داده"""
+        """دریافت آمار از دیتابیس"""
         if not self.connection:
             return {}
             
@@ -335,7 +335,7 @@ class DatabaseManager:
             return {}
     
     def close(self):
-        """بستن اتصال پایگاه داده"""
+        """بستن اتصال دیتابیس"""
         if self.connection:
             self.connection.close()
             self.connection = None
@@ -572,7 +572,7 @@ class FHESearchEngine:
             if encrypted_vector is not None:
                 encrypted_count += 1
             
-            # ذخیره در پایگاه داده
+            # ذخیره در دیتابیس
             doc_id = self.db_manager.store_document(
                 content=meta['original_text'],
                 processed_content=meta['processed_text'],
