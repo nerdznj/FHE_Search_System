@@ -1,5 +1,5 @@
 # سیستم جستجوی رمزنگاری هومورفیک (FHE Search System)
-
+![Alt text]([link-to-your-image](https://raw.githubusercontent.com/nerdznj/FHE_Search_System/refs/heads/main/image.jpg))
 یک موتور جستجوی پیشرفته و چندزبانه با قابلیت حفظ حریم خصوصی که از تکنیک‌های رمزنگاری هومورفیک کامل (FHE) و پردازش زبان طبیعی استفاده می‌کند.
 
 ## ویژگی‌های کلیدی
