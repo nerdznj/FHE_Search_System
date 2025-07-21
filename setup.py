@@ -23,7 +23,6 @@ def read_requirements():
 setup(
     name="fhe-search-system",
     version="1.0.0",
-    author="محمد حسینی",
     author_email="info@fhe-search.ir",
     description="سیستم جستجوی رمزنگاری هومورفیک با پشتیبانی چندزبانه",
     long_description=read_readme(),
